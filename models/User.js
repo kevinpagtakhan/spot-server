@@ -6,7 +6,8 @@ var userSchema = mongoose.Schema({
   name: String,
   email: String,
   password: String,
-  role: Number
+  role: Number,
+  listings: [{type: mongoose.Schema.Types.ObjectId, ref: 'Space'}]
 }, {timestamps: true})
 
 userSchema.methods.generateHash = function(password){
