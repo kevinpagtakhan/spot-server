@@ -44,7 +44,7 @@ var controller = {
           res.json({success: false, message: 'Authentication failed. Incorrect password.'})
         } else {
           var userToken = {
-            id: user._id,
+            _id: user._id,
             username: user.username
           };
           var secret = 'helloworld';

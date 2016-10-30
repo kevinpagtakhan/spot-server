@@ -11,7 +11,8 @@ var spaceSchema = mongoose.Schema({
   },
   type: String,
   number: String,
-  description: String
+  description: String,
+  reservations: [{type: mongoose.Schema.Types.ObjectId, ref: 'Reservation'}]
 }, {timestamps: true})
 
 var Space = mongoose.model('Space', spaceSchema);

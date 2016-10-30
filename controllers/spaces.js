@@ -13,19 +13,20 @@ var controller = {
   },
 
   create: function(req, res){
-    User.findById(req.user.id, function(err, user){
+    User.findById(req.user._id, function(err, user){
       if(err) {
         res.json({success: false, message: 'Could not find user.'});
       } else {
         var space = new Space();
-        space._by = req.user.id;
+        space._by = req.user._id;
         space.address = req.body.address;
         space.type = req.body.type;
+        space.description = req.body.description;
         space.save(function(err, createdSpace){
           if(err) {
             res.json({success: false, message: 'Could not save new space.'});
           } else {
-            user.listings.push(space._id);
+            user.spaces.push(space._id);
             user.save(function(err){
               if(err){
                 res.json({success: false, message: 'Could not save user.'});
