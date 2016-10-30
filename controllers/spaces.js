@@ -61,11 +61,30 @@ var controller = {
   },
 
   delete: function(req, res){
-    Space.findByIdAndRemove(req.params.id, function(err, space){
+    Space.findById(req.params.id, function(err, space){
       if (err) {
         res.json({success: false, message: err})
       } else {
-        res.json({success: true, data: space})
+
+        User.findById(space._by, function(err, user){
+          if(err){
+            res.json({success: false, message: err})
+          } else {
+            user.update({$pull: {spaces: space._id}}, function(err){
+              if(err){
+                res.json({success: false, message: err})
+              } else {
+                space.remove(function(err){
+                  if (err) {
+                    res.json({success: false, message: err})
+                  } else {
+                    res.json({success: true, data: space})
+                  }
+                });
+              }
+            })
+          }
+        })
       }
     });
   },

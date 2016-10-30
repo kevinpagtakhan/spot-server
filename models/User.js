@@ -19,6 +19,11 @@ userSchema.methods.validatePassword = function(password){
   return bcrypt.compareSync(password, this.password);
 };
 
+userSchema.pre('remove', function(next) {
+    // Remove all the assignment docs that reference the removed person.
+    this.model('Space').remove({ _by: this._id }, next);
+});
+
 var User = mongoose.model('User', userSchema);
 
 module.exports = User;
