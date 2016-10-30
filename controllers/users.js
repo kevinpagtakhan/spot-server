@@ -49,22 +49,12 @@ var controller = {
           };
           var secret = 'helloworld';
           var config = {
-            expiresIn: 1440
+            expiresIn: 60*60
           }
 
           var token = jwt.sign(userToken, secret, config);
 
-          jwt.verify(token, 'helloworld', function(err, decoded) {
-            if (err) {
-              return res.json({ success: false, message: 'Failed to authenticate token.' });
-            } else {
-              // if everything is good, save to request for use in other routes
-              req.decoded = decoded;
-              // next();
-              res.json(decoded)
-            }
-          });
-          // res.json({success: true, data: token});
+          res.json({success: true, data: token});
         }
       }
     })
