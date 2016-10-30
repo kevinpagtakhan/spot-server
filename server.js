@@ -3,11 +3,12 @@ var app = express();
 var bodyParser = require('body-parser');
 var logger = require('morgan');
 var mongoose = require('mongoose');
+var dotenv = require('dotenv').load({silent: true});
 var PORT = process.env.PORT || 3000;
 
 var userRoutes = require('./routes/users.js');
 
-mongoose.connect('mongodb://localhost/project4', function(err, db){
+mongoose.connect(process.env.MONGO_URL, function(err, db){
   console.log(err || 'DATABASE: OK');
 })
 
