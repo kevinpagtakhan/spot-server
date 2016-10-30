@@ -7,7 +7,7 @@ router.route('/')
   .post(usersController.register);
 
 router.route('/authenticate')
-  .get(usersController.authenticate);
+  .post(usersController.authenticate);
 
 router.route('/:id')
   .get(usersController.show)

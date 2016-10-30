@@ -20,8 +20,11 @@ var controller = {
         res.json({success: false, message: 'Username already taken. Please choose a new one.'});
       } else {
         var newUser = new User();
-        newUser = req.body;
-        newUser.password = User.generateHash(req.body.password);
+        newUser.username = req.body.username;
+        newUser.name = req.body.name;
+        newUser.email = req.body.email;
+        newUser.password = newUser.generateHash(req.body.password);
+        newUser.role = req.body.role;
 
         newUser.save(function(err, createdUser){
           res.json({success: true, data: createdUser});
@@ -37,7 +40,7 @@ var controller = {
       } else if (!user) {
         res.json({success: false, message: 'Authentication failed. User not found.'});
       } else {
-        if(!User.validatePassword(req.body.password)){
+        if(!user.validatePassword(req.body.password)){
           res.json({success: false, message: 'Authentication failed. Incorrect password.'})
         } else {
           var userToken = {
@@ -46,12 +49,22 @@ var controller = {
           };
           var secret = 'helloworld';
           var config = {
-            expiresInMinutes: 1440
+            expiresIn: 1440
           }
 
-          var token = jws.sign(userToken, secret, config);
+          var token = jwt.sign(userToken, secret, config);
 
-          res.json({success: true, data: token});
+          jwt.verify(token, 'helloworld', function(err, decoded) {
+            if (err) {
+              return res.json({ success: false, message: 'Failed to authenticate token.' });
+            } else {
+              // if everything is good, save to request for use in other routes
+              req.decoded = decoded;
+              // next();
+              res.json(decoded)
+            }
+          });
+          // res.json({success: true, data: token});
         }
       }
     })
