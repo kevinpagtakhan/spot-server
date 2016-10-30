@@ -34,7 +34,6 @@ var controller = {
               if(err) {
                 res.json({success: false, message: 'Could not create reservation'});
               } else {
-                console.log(user);
                 user.reservations.push(createdReservation);
                 user.save(function(err){
                   if(err) {
