@@ -7,6 +7,7 @@ var userSchema = mongoose.Schema({
   email: String,
   password: String,
   role: Number,
+  image_url: String,
   reservations: [{type: mongoose.Schema.Types.ObjectId, ref: 'Reservation'}],
   spaces: [{type: mongoose.Schema.Types.ObjectId, ref: 'Space'}]
 }, {timestamps: true})

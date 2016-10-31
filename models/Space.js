@@ -1,5 +1,11 @@
 var mongoose = require('mongoose');
 
+var reviewSchema = mongoose.Schema({
+  _by: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+  content: String,
+  stars: Number
+}, {timestamps: true});
+
 var spaceSchema = mongoose.Schema({
   _by: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
   address: {
@@ -11,8 +17,10 @@ var spaceSchema = mongoose.Schema({
   },
   type: String,
   number: String,
+  image_url: String,
   description: String,
-  reservations: [{type: mongoose.Schema.Types.ObjectId, ref: 'Reservation'}]
+  reservations: [{type: mongoose.Schema.Types.ObjectId, ref: 'Reservation'}],
+  reviews: [reviewSchema]
 }, {timestamps: true})
 
 var Space = mongoose.model('Space', spaceSchema);
