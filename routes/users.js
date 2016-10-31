@@ -3,8 +3,11 @@ var router = express.Router();
 var usersController = require('../controllers/users.js');
 
 router.route('/')
-  .get(usersController.index)
+  .get(usersController.loggedInUser)
   .post(usersController.register);
+
+router.route('/all')
+  .get(usersController.index)
 
 router.route('/authenticate')
   .post(usersController.authenticate);

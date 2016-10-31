@@ -28,8 +28,6 @@ app.use(function(req, res, next) {
   next();
 });
 
-app.use('/api/users', userRoutes);
-
 app.use(function(req, res, next){
   var token = req.body.token || req.query.token || req.headers['x-access-token'];
   if(token) {
@@ -47,6 +45,7 @@ app.use(function(req, res, next){
   }
 })
 
+app.use('/api/users', userRoutes);
 app.use('/api/spaces', spacesRoutes);
 app.use('/api/reservations', reservationsRoutes);
 app.use('/api/search', searchRoutes);

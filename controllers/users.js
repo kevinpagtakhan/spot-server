@@ -12,6 +12,16 @@ var controller = {
     })
   },
 
+  loggedInUser: function(req, res){
+    User.findById(req.user._id).populate('reservations spaces').exec(function(err, users){
+      if (err) {
+        res.json({success: false, message: err})
+      } else {
+        res.json({success: true, data: users})
+      }
+    })
+  },
+
   register: function(req, res){
     User.findOne({username: req.body.username}, function(err, user){
       if(err) {
