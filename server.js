@@ -10,6 +10,7 @@ var PORT = process.env.PORT || 3000;
 var userRoutes = require('./routes/users.js');
 var spacesRoutes = require('./routes/spaces.js');
 var reservationsRoutes = require('./routes/reservations.js');
+var searchRoutes = require('./routes/search.js');
 
 mongoose.connect(process.env.MONGO_URL, function(err, db){
   console.log(err || 'DATABASE: OK');
@@ -42,6 +43,7 @@ app.use(function(req, res, next){
 
 app.use('/api/spaces', spacesRoutes);
 app.use('/api/reservations', reservationsRoutes);
+app.use('/api/search', searchRoutes);
 
 app.get('/', function(req, res){
   console.log(req.user);
