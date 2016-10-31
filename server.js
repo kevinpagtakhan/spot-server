@@ -7,6 +7,7 @@ var dotenv = require('dotenv').load({silent: true});
 var jwt = require('jsonwebtoken');
 var PORT = process.env.PORT || 3000;
 
+var accountRoutes = require('./routes/accounts.js');
 var userRoutes = require('./routes/users.js');
 var spacesRoutes = require('./routes/spaces.js');
 var reservationsRoutes = require('./routes/reservations.js');
@@ -27,6 +28,8 @@ app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
+
+app.use('/api/users', accountRoutes);
 
 app.use(function(req, res, next){
   var token = req.body.token || req.query.token || req.headers['x-access-token'];

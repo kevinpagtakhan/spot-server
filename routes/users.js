@@ -4,13 +4,9 @@ var usersController = require('../controllers/users.js');
 
 router.route('/')
   .get(usersController.loggedInUser)
-  .post(usersController.register);
 
 router.route('/all')
   .get(usersController.index)
-
-router.route('/authenticate')
-  .post(usersController.authenticate);
 
 router.route('/:id')
   .get(usersController.show)
