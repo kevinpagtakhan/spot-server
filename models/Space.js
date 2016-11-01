@@ -8,6 +8,7 @@ var reviewSchema = mongoose.Schema({
 
 var spaceSchema = mongoose.Schema({
   _by: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+  title: String,
   address: {
     line_1: String,
     line_2: String,
