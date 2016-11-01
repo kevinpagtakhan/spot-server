@@ -36,7 +36,10 @@ app.use(function(req, res, next){
   if(token) {
     jwt.verify(token, 'helloworld', function(err, decoded) {
       if (err) {
-        return res.json({ success: false, message: 'Token authentication failed.' });
+        return res.status(403).send({
+            success: false,
+            message: 'Token Authentication failed.'
+        });
       } else {
         req.user = decoded;
         console.log(req.user);
@@ -44,7 +47,11 @@ app.use(function(req, res, next){
       }
     });
   } else {
-    res.json({success: false, message: 'No token provided'});
+    // res.json({success: false, message: 'No token provided'});
+    return res.status(403).send({
+        success: false,
+        message: 'No token provided.'
+    });
   }
 })
 
