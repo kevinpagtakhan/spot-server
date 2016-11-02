@@ -19,9 +19,11 @@ var controller = {
       } else {
         var space = new Space();
         space._by = req.user._id;
+        space.title = req.body.title;
         space.address = req.body.address;
         space.type = req.body.type;
         space.description = req.body.description;
+        space.image_url = req.body.image_url;
         space.save(function(err, createdSpace){
           if(err) {
             res.json({success: false, message: 'Could not save new space.'});
