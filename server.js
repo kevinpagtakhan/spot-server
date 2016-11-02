@@ -6,6 +6,7 @@ var mongoose = require('mongoose');
 var dotenv = require('dotenv').load({silent: true});
 var jwt = require('jsonwebtoken');
 var PORT = process.env.PORT || 3000;
+var aws = require('aws-sdk');
 
 var accountRoutes = require('./routes/accounts.js');
 var userRoutes = require('./routes/users.js');
@@ -59,6 +60,32 @@ app.use('/api/users', userRoutes);
 app.use('/api/spaces', spacesRoutes);
 app.use('/api/reservations', reservationsRoutes);
 app.use('/api/search', searchRoutes);
+
+app.get('/api/sign-s3', function(req, res) {
+  var s3 = new aws.S3();
+  var fileName = req.query['file-name'];
+  var fileType = req.query['file-type'];
+  var s3Params = {
+    Bucket: process.env.AWS_BUCKET_NAME,
+    Key: fileName,
+    Expires: 60,
+    ContentType: fileType,
+    ACL: 'public-read'
+  };
+
+  s3.getSignedUrl('putObject', s3Params, function(err, data) {
+    if(err){
+      console.log(err);
+      return res.end();
+    }
+    var returnData = {
+      signedRequest: data,
+      url: `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/${fileName}`
+    };
+    res.write(JSON.stringify(returnData));
+    res.end();
+  });
+});
 
 app.get('/', function(req, res){
   console.log(req.user);
