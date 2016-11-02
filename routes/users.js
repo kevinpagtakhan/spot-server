@@ -10,7 +10,7 @@ router.route('/all')
 
 router.route('/:id')
   .get(usersController.show)
-  .patch(usersController.update)
+  .post(usersController.update)
   .delete(usersController.delete);
 
 module.exports = router;
