@@ -16,16 +16,15 @@ var controller = {
         newUser.email = req.body.email;
         newUser.password = newUser.generateHash(req.body.password);
         newUser.role = req.body.role;
+        newUser.image_url = 'http://s3.amazonaws.com/37assets/svn/765-default-avatar.png';
 
         newUser.save(function(err, createdUser){
-
-          mail('welcome', createdUser.email, 'Welcome to SPOT', function(err){
-            if(err){
-              res.json({success: false, message: err});
-            } else {
-              res.json({success: true, data: createdUser});
-            }
-          })
+          if(err) {
+            res.json({success: false, message: err});
+          } else{
+            mail('welcome', createdUser.email, 'Welcome to SPOT');
+            res.json({success: true, data: createdUser});
+          }
         })
       }
     })

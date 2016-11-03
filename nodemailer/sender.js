@@ -21,7 +21,7 @@ var smtpConfig = {
 // create reusable transporter object using the default SMTP transport
 var transporter = nodemailer.createTransport(smtpConfig);
 
-var send = function(filename, email, subject, callback){
+var send = function(filename, email, subject){
   fs.readFile(__dirname + '/templates/' + filename + '.html', (err, data) => {
     if (err) throw err;
 
@@ -36,9 +36,9 @@ var send = function(filename, email, subject, callback){
     // send mail with defined transport object
     transporter.sendMail(mailOptions, function(error, info){
         if(error){
-          callback(error)
+          console.log(error);
         } else {
-          callback(null, info)
+          console.log(info);
         }
     });
   });
