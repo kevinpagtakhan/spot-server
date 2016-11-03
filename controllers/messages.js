@@ -2,7 +2,7 @@ var Reservation = require('../models/Reservation.js');
 
 var controller = {
   index: function(req, res){
-    Reservation.findById(req.params.id, function(err, reservation){
+    Reservation.findById(req.params.id).populate('messages._by').exec(function(err, reservation){
       if(err) {
         res.json({success: false, message: err});
       } else {
@@ -12,7 +12,7 @@ var controller = {
   },
 
   create: function(req, res){
-    Reservation.findById(req.params.id, function(err, reservation){
+    Reservation.findById(req.params.id).populate('messages._by').exec(function(err, reservation){
       if(err) {
         res.json({success: false, message: err});
       } else {
@@ -25,7 +25,13 @@ var controller = {
           if(err){
             res.json({success: false, message: err});
           } else {
-            res.json({success: true, data: reservation.messages});
+            Reservation.findById(reservation._id).populate('messages._by').exec(function(err, populatedReservation){
+              if(err){
+                res.json({success: false, message: err});
+              } else {
+                res.json({success: true, data: populatedReservation.messages});
+              }
+            })
           }
         })
       }

@@ -4,7 +4,7 @@ var Reservation = require('../models/Reservation.js');
 
 var controller = {
   index: function(req, res){
-    Reservation.find({}, function(err, spaces){
+    Reservation.find({}).populate('messages._by').exec(function(err, spaces){
       if (err) {
         res.json({success: false, message: err})
       } else {
@@ -58,7 +58,7 @@ var controller = {
   },
 
   show: function(req, res){
-    Reservation.findById(req.params.id).populate('_space').exec(function(err, space){
+    Reservation.findById(req.params.id).populate('_space messages._by').exec(function(err, space){
       if (err) {
         res.json({success: false, message: err})
       } else {
