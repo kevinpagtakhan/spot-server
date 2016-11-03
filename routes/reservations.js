@@ -13,7 +13,7 @@ router.route('/:id/messages')
 
 router.route('/:id')
   .get(reservationsController.show)
-  .patch(reservationsController.update)
+  .post(reservationsController.update)
   .delete(reservationsController.delete);
 
 module.exports = router;
