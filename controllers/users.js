@@ -13,7 +13,7 @@ var controller = {
   },
 
   loggedInUser: function(req, res){
-    User.findById(req.user._id).populate({path: 'reservations spaces', populate: {path: '_space'}}).exec(function(err, users){
+    User.findById(req.user._id).populate({path: 'reservations spaces', populate: {path: '_space reservations'}}).exec(function(err, users){
       if (err) {
         res.json({success: false, message: err})
       } else {
