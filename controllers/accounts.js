@@ -19,7 +19,7 @@ var controller = {
 
         newUser.save(function(err, createdUser){
 
-          mail('welcome', createdUser.email, 'Welcome To SPOT', function(err){
+          mail('welcome', createdUser.email, 'Welcome to SPOT', function(err){
             if(err){
               res.json({success: false, message: err});
             } else {
