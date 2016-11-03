@@ -7,6 +7,8 @@ var dotenv = require('dotenv').load({silent: true});
 var jwt = require('jsonwebtoken');
 var PORT = process.env.PORT || 3000;
 var aws = require('aws-sdk');
+var nodemailer = require('nodemailer');
+var fs = require('fs');
 
 var accountRoutes = require('./routes/accounts.js');
 var userRoutes = require('./routes/users.js');
@@ -29,6 +31,10 @@ app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
+
+app.get('/', function(req, res){
+  
+})
 
 app.use('/api/users', accountRoutes);
 

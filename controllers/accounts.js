@@ -1,11 +1,12 @@
 var User = require('../models/User.js');
 var jwt = require('jsonwebtoken');
+var mail = require('../nodemailer/sender.js');
 
 var controller = {
   register: function(req, res){
     User.findOne({username: req.body.username}, function(err, user){
       if(err) {
-        req.json({success: false, message: err});
+        res.json({success: false, message: err});
       } else if (user) {
         res.json({success: false, message: 'Username already taken. Please choose a new one.'});
       } else {
@@ -17,7 +18,14 @@ var controller = {
         newUser.role = req.body.role;
 
         newUser.save(function(err, createdUser){
-          res.json({success: true, data: createdUser});
+
+          mail('welcome', createdUser.email, 'Welcome To SPOT', function(err){
+            if(err){
+              res.json({success: false, message: err});
+            } else {
+              res.json({success: true, data: createdUser});
+            }
+          })
         })
       }
     })
@@ -26,7 +34,7 @@ var controller = {
   authenticate: function(req, res){
     User.findOne({username: req.body.username}, function(err, user){
       if(err) {
-        req.json(err);
+        res.json(err);
       } else if (!user) {
         res.json({success: false, message: 'Authentication failed. User not found.'});
       } else {
