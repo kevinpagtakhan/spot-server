@@ -10,8 +10,8 @@ var smtpConfig = {
   port: 25,
   secure: false, // use SSL
   auth: {
-      user: process.env.NODEMAILER_USER,
-      pass: process.env.NODEMAILER_PASS
+      user: process.env.SPOT_NODEMAILER_USER,
+      pass: process.env.SPOT_NODEMAILER_PASS
   },
   tls: {
       rejectUnauthorized: false

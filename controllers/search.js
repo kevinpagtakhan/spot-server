@@ -28,7 +28,7 @@ var controller = {
         var origin = req.body.origin.replace(/ /g, '+');
         var destinations = destination.join('|');
         var mode = 'walking';
-        var key = process.env.GOOGLE_DISTANCE_MATRIX_API;
+        var key = process.env.SPOT_GOOGLE_DISTANCE_MATRIX_API;
 
         var url = 'https://maps.googleapis.com/maps/api/distancematrix/json?unit=' + unit + '&origins='+ origin + '&destinations=' + destinations + '&mode=' + mode + '&key=' + key;
 
